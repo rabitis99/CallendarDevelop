@@ -94,8 +94,7 @@
 
 | 기능                 | 메서드  | 엔드포인트                          | 요청 예시                                         | 응답                       
 | ------------------ | ---- | ------------------------------ | --------------------------------------------- | -------------------------------------- | 
-| Create Schedule    | POST | `/schedules`                   | `{ "id": "1", "task": "할일", "title": "제목2" }` | 201 Created                            
-|  
+| Create Schedule    | POST | `/schedules`                   | `{ "id": "1", "task": "할일", "title": "제목2" }` | 201 Created                        |    
 | Get All Schedules  | GET  | `/schedules`                   | -                                             | 200 OK                                 |   
 | Get Schedule by ID | GET  | `/schedules/{id}`              | -                                             | 200 OK, 404 Not Found                  |   
 | Update Schedule    | PUT  | `/schedules/{scheduleId}/{id}` | `{ "task": "할일3" }`                           | 200 OK, 400 Bad Request, 404 Not Found |   
