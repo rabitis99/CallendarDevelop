@@ -105,7 +105,7 @@
 | ----------------- | ---- | ---------------- | ----------------------------------------------- | --------------------- | 
 | Create Comment    | POST | `/comment`       | `{ "schedule_id": "1", "comment": "좋은 글이예요2" }` | 201 Created           | 
 | Get Comment by ID | GET  | `/comments/{id}` | -                                               | 200 OK, 404 Not Found |   
-| Put Comment       | PUt  | /comments/{id}   | { "schedule\_id": "1", "comment": "좋은 글이예요2" }  | 200 OK, 404 Not Found |  
+| Put Comment       | PUT  | /comments/{id}   | { "schedule\_id": "1", "comment": "좋은 글이예요2" }  | 200 OK, 404 Not Found |  
 | Delete Comment | DELETE | `/comments/{id}` | - | 200 OK, 404 Not Found | 
 | -------------- | ------ | ---------------- | - | --------------------- | 
 
