@@ -109,6 +109,8 @@
 | Delete Comment | DELETE | `/comments/{id}` | - | 200 OK, 404 Not Found | 
 | -------------- | ------ | ---------------- | - | --------------------- | 
 
+ERD
+https://www.erdcloud.com/d/wnxoLDw8kcQnumPfQ
 
 
 
