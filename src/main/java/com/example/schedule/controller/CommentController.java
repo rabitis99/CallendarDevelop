@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
-    @PostMapping
+    @PostMapping("/{scheduleId}/{id}")
     public ResponseEntity<CommentResponseDto> saveComment(@Valid @RequestBody CommentRequestDto commentRequestDto,
                                                           HttpServletRequest httpServletRequest){
         Long authorId =(Long) httpServletRequest.getSession(false).getAttribute(Const.LOGIN_USER);
@@ -33,7 +33,7 @@ public class CommentController {
         return new ResponseEntity<>(commentService.findCommentBySchedule(scheduleId),HttpStatus.OK);
     }
 
-    @PatchMapping("/{scheduleId}/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<CommentResponseDto> updateComment(@PathVariable Long id,
                                                             @PathVariable Long scheduleId,
                                                             @RequestBody CommetUpdateCommentRequestDto commetUpdateCommentRequestDto,
@@ -43,7 +43,7 @@ public class CommentController {
 
         return new ResponseEntity<>(commentService.updateComment(authorId,id,commetUpdateCommentRequestDto),HttpStatus.OK);
     }
-    @DeleteMapping("/{scheduleId}/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteComment(@PathVariable Long id, @PathVariable Long scheduleId){
 
         return new ResponseEntity<>(commentService.deleteComment(id),HttpStatus.OK);

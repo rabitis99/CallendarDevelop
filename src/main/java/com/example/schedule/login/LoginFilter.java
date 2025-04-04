@@ -1,7 +1,5 @@
 package com.example.schedule.login;
 
-import com.example.schedule.exception.CustomException;
-import com.example.schedule.exception.ErrorCode;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,8 +24,11 @@ public class LoginFilter implements Filter {
 
         if (!IsWhiteList(requestURL)) {
             if (httpSession == null || httpSession.getAttribute(Const.LOGIN_USER) == null) {
-
-                throw (new CustomException(ErrorCode.Login,new String[] {"home/login","잘못된 입력입니다."}));
+                httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
+                httpServletResponse.setContentType("application/json");
+                httpServletResponse.setCharacterEncoding("UTF-8");
+                httpServletResponse.getWriter().write("{\"error\": \"로그인이 필요합니다.\"}");
+                return;
             }
         }
         filterChain.doFilter(httpServletRequest,httpServletResponse);
