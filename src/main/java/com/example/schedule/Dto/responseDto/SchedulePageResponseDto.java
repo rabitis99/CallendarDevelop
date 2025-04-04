@@ -16,15 +16,6 @@ public class SchedulePageResponseDto<T> {
     private LocalDateTime updatedAt;
     private String authorName;
 
-    public SchedulePageResponseDto(Schedule schedule) {
-
-        this.title=schedule.getTitle();
-        this.task=schedule.getTask();
-        this.commentCount=schedule.getComments().size();
-        this.createdAt=schedule.getCreatedAt();
-        this.updatedAt=schedule.getUpdatedAt();
-        this.authorName=schedule.getAuthor().getAuthorName();
-    }
     public static SchedulePageResponseDto fromEntity(Schedule schedule){
         return new SchedulePageResponseDto(
                 schedule.getTitle(),

@@ -24,9 +24,12 @@ import java.util.Objects;
 
 public class AuthorController {
     private final AuthorService authorService;
-    //생성
+    //생성(회원가입)
     @PostMapping()
     ResponseEntity<AuthorResponseDto>saveAuthor(@Valid @RequestBody  AuthorRequestDto authorRequestDto){
+
+
+
         return new ResponseEntity<>(authorService.saveAuthor(authorRequestDto), HttpStatus.CREATED);
     }
     //

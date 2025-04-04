@@ -19,7 +19,7 @@ public class ErrorDto<T> {
         this.fieldErrors=fieldErrors;
         this.message=errorCode.getMessage();
         this.status=errorCode.getStatus();
-        this.localDateTime=errorCode.getLocalDateTime();
+        this.localDateTime=LocalDateTime.now();
     }
 
     public ErrorDto(String message) {

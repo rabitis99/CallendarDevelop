@@ -5,6 +5,8 @@ import com.example.schedule.Dto.requestDto.update.AuthorUpdatePasswordRequestDto
 import com.example.schedule.Dto.responseDto.AuthorResponseDto;
 import com.example.schedule.entity.Author;
 import com.example.schedule.config.PasswordEncoder;
+import com.example.schedule.exception.CustomException;
+import com.example.schedule.exception.ErrorCode;
 import com.example.schedule.repository.AuthorRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +20,9 @@ public class AuthorServiceImpl implements AuthorService{
 
     @Override
     public AuthorResponseDto saveAuthor(AuthorRequestDto authorRequestDto) {
-
+        if (authorRepository.existsByEmail(authorRequestDto.getEmail())){
+            throw new CustomException(ErrorCode.DuplicateEmail);
+        }
         Author author=new Author(authorRequestDto);
 
         String encodedPassword=passwordEncoder.encode(author.getPassword());
