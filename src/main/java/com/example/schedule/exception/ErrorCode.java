@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 public enum ErrorCode {
     Id("잘못된 아이디입니다",401,LocalDateTime.now(),HttpStatus.BAD_REQUEST),
     Password("잘못된 비밀번호입니다.",401,LocalDateTime.now(),HttpStatus.BAD_REQUEST),
-    Email("잘못된 이메일입니다.",401,LocalDateTime.now(),HttpStatus.BAD_REQUEST);
-
+    Email("잘못된 이메일입니다.",401,LocalDateTime.now(),HttpStatus.BAD_REQUEST),
+    Login("로그인을 해주세요",401,LocalDateTime.now(),HttpStatus.UNAUTHORIZED);
 
     private final String message;
     private final int status;

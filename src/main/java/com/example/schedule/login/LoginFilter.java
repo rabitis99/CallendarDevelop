@@ -1,5 +1,7 @@
 package com.example.schedule.login;
 
+import com.example.schedule.exception.CustomException;
+import com.example.schedule.exception.ErrorCode;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,7 +26,8 @@ public class LoginFilter implements Filter {
 
         if (!IsWhiteList(requestURL)) {
             if (httpSession == null || httpSession.getAttribute(Const.LOGIN_USER) == null) {
-                throw (new IOException("하기싫어요"));
+
+                throw (new CustomException(ErrorCode.Login,new String[] {"home/login","잘못된 입력입니다."}));
             }
         }
         filterChain.doFilter(httpServletRequest,httpServletResponse);

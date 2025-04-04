@@ -12,6 +12,7 @@ import com.example.schedule.repository.CommentRepository;
 import com.example.schedule.repository.ScheduleRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -99,13 +100,9 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     }
     @Override
-    public List<SchedulePageResponseDto> getSchedules(Pageable pageable) {
-        List<Schedule> schedules = scheduleRepository.findAllByOrderByUpdatedAtDesc(pageable);
-        List<SchedulePageResponseDto> schedulePageResponseDtoList=new ArrayList<>();
-        for (Schedule schedule:schedules){
-            schedulePageResponseDtoList.add(new SchedulePageResponseDto<>(schedule));
-        }
+    public Page<SchedulePageResponseDto> getSchedules(Pageable pageable) {
+        Page<Schedule> schedules =scheduleRepository.findAllByOrderByUpdatedAtDesc(pageable);
 
-        return schedulePageResponseDtoList;
+        return schedules.map(SchedulePageResponseDto::fromEntity);
     }
 }

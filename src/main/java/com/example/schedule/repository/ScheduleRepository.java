@@ -1,6 +1,7 @@
 package com.example.schedule.repository;
 
 import com.example.schedule.entity.Schedule;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,7 +15,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule,Long>{
 //    default Schedule findByIdElseThrow(Long id){
 //        return findById(id).orElseThrow(()->new RuntimeException("없어요"));
 //    }
-    List<Schedule> findAllByOrderByUpdatedAtDesc(Pageable pageable);
+    Page<Schedule> findAllByOrderByUpdatedAtDesc(Pageable pageable);
     /*
     Page<>->postMan
         "pageable": {

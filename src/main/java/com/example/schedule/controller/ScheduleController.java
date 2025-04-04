@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -75,13 +76,13 @@ public class ScheduleController {
     }
 
     @GetMapping({"/all"})
-    public ResponseEntity<List<SchedulePageResponseDto>> getSchedules(
+    public ResponseEntity<Page<SchedulePageResponseDto>> getSchedules(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
 
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        List<SchedulePageResponseDto> schedules = scheduleService.getSchedules(pageable);
+        Page<SchedulePageResponseDto> schedules = scheduleService.getSchedules(pageable);
         return new ResponseEntity<>(schedules,HttpStatus.OK);
     }
 

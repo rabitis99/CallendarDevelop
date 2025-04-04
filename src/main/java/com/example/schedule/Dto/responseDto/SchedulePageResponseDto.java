@@ -24,6 +24,15 @@ public class SchedulePageResponseDto<T> {
         this.createdAt=schedule.getCreatedAt();
         this.updatedAt=schedule.getUpdatedAt();
         this.authorName=schedule.getAuthor().getAuthorName();
-
+    }
+    public static SchedulePageResponseDto fromEntity(Schedule schedule){
+        return new SchedulePageResponseDto(
+                schedule.getTitle(),
+                schedule.getTask(),
+                schedule.getComments().size(),
+                schedule.getCreatedAt(),
+                schedule.getUpdatedAt(),
+                schedule.getAuthor().getAuthorName()
+        );
     }
 }

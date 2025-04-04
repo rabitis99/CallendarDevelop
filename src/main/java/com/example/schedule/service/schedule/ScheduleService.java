@@ -3,6 +3,7 @@ package com.example.schedule.service.schedule;
 import com.example.schedule.Dto.requestDto.common.ScheduleRequestDto;
 import com.example.schedule.Dto.responseDto.SchedulePageResponseDto;
 import com.example.schedule.Dto.responseDto.ScheduleResponseDto;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -20,6 +21,6 @@ public interface ScheduleService {
 
     String deleteSchedule(long id);
 
-    List<SchedulePageResponseDto> getSchedules(Pageable pageable) ;
+    Page<SchedulePageResponseDto> getSchedules(Pageable pageable) ;
 
 }
