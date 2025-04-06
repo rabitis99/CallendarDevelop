@@ -1,8 +1,8 @@
 package com.example.schedule.service.schedule;
 
-import com.example.schedule.Dto.requestDto.common.ScheduleRequestDto;
-import com.example.schedule.Dto.responseDto.SchedulePageResponseDto;
-import com.example.schedule.Dto.responseDto.ScheduleResponseDto;
+import com.example.schedule.dto.requestDto.common.ScheduleRequestDto;
+import com.example.schedule.dto.responseDto.SchedulePageResponseDto;
+import com.example.schedule.dto.responseDto.ScheduleResponseDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

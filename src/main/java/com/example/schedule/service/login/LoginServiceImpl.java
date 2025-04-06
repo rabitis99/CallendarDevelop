@@ -1,7 +1,7 @@
 package com.example.schedule.service.login;
 
-import com.example.schedule.Dto.requestDto.common.LoginRequestDto;
-import com.example.schedule.Dto.responseDto.LoginResponseDto;
+import com.example.schedule.dto.requestDto.common.LoginRequestDto;
+import com.example.schedule.dto.responseDto.LoginResponseDto;
 import com.example.schedule.repository.AuthorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

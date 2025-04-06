@@ -1,9 +1,9 @@
 package com.example.schedule.controller;
 
 
-import com.example.schedule.Dto.requestDto.common.ScheduleRequestDto;
-import com.example.schedule.Dto.responseDto.SchedulePageResponseDto;
-import com.example.schedule.Dto.responseDto.ScheduleResponseDto;
+import com.example.schedule.dto.requestDto.common.ScheduleRequestDto;
+import com.example.schedule.dto.responseDto.SchedulePageResponseDto;
+import com.example.schedule.dto.responseDto.ScheduleResponseDto;
 import com.example.schedule.login.Const;
 import com.example.schedule.service.schedule.ScheduleService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -29,12 +30,7 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
     @PostMapping
     ResponseEntity<ScheduleResponseDto> createSchedule(@Valid @RequestBody ScheduleRequestDto scheduleRequestDto, HttpServletRequest httpServletRequest) {
-        /*HttpServletRequest란 무엇인가?
-            -> 잘못된 코드유발 개선필요
-            목적 로그인 정보(id)를 통해서 글 작성하기 실패
-            why-> 의존성이 너무 강해요->코드 수정이 불편
-            chatGpt사용해봤지만, 여기서 부턴 본인 코드X 판단
-         */
+
         HttpSession session=httpServletRequest.getSession();
         Long id=(Long)session.getAttribute(Const.LOGIN_USER);
         scheduleRequestDto.updateId(id);
@@ -81,7 +77,7 @@ public class ScheduleController {
             @RequestParam(defaultValue = "10") int size
 
     ) {
-        Pageable pageable = PageRequest.of(page, size);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("updatedAt").descending());
         Page<SchedulePageResponseDto> schedules = scheduleService.getSchedules(pageable);
         return new ResponseEntity<>(schedules,HttpStatus.OK);
     }

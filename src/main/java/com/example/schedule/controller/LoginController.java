@@ -1,8 +1,8 @@
 package com.example.schedule.controller;
 
 
-import com.example.schedule.Dto.requestDto.common.LoginRequestDto;
-import com.example.schedule.Dto.responseDto.LoginResponseDto;
+import com.example.schedule.dto.requestDto.common.LoginRequestDto;
+import com.example.schedule.dto.responseDto.LoginResponseDto;
 import com.example.schedule.service.login.LoginService;
 import com.example.schedule.login.Const;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,12 +1,11 @@
 package com.example.schedule.service.author;
 
-import com.example.schedule.Dto.requestDto.common.AuthorRequestDto;
-import com.example.schedule.Dto.requestDto.update.AuthorUpdatePasswordRequestDto;
-import com.example.schedule.Dto.responseDto.AuthorResponseDto;
+import com.example.schedule.dto.requestDto.common.AuthorRequestDto;
+import com.example.schedule.dto.requestDto.update.AuthorUpdatePasswordRequestDto;
+import com.example.schedule.dto.responseDto.AuthorResponseDto;
 
 public interface AuthorService {
-
-    AuthorResponseDto saveAuthor(AuthorRequestDto AuthorRequestDto);
+    AuthorResponseDto saveAuthor(AuthorRequestDto authorRequestDto);
 
     String findAuthorByEmail(String email);
 
@@ -17,5 +16,6 @@ public interface AuthorService {
     String updateAuthorPassword(long id, AuthorUpdatePasswordRequestDto authorUpdatePasswordRequestDto);
 
     String deleteAuthor(long id);
+
 
 }

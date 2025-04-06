@@ -1,14 +1,11 @@
 package com.example.schedule.entity;
 
 
-import com.example.schedule.Dto.requestDto.common.ScheduleRequestDto;
+import com.example.schedule.dto.requestDto.common.ScheduleRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -28,8 +25,9 @@ public class Schedule extends BaseEntity{
     private String task;
     @Column(length = 100,nullable = false)
     private String title;
-    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Comment> comments = new ArrayList<>();
 
     public Schedule(ScheduleRequestDto scheduleRequestDto){
         this.task=scheduleRequestDto.getTask();
@@ -45,6 +43,9 @@ public class Schedule extends BaseEntity{
         this.task=task;
     }
     public void updateTitle(String title){
+        if (title== null||title.isEmpty()){
+            throw new RuntimeException("title은 null이 될 수 없습니다.");
+        }
         this.title=title;
     }
     public void updateAuthor(Author author){

@@ -1,6 +1,6 @@
 package com.example.schedule.repository;
 
-import com.example.schedule.Dto.responseDto.LoginResponseDto;
+import com.example.schedule.dto.responseDto.LoginResponseDto;
 import com.example.schedule.config.PasswordEncoder;
 import com.example.schedule.entity.Author;
 import com.example.schedule.exception.CustomException;
@@ -27,7 +27,7 @@ public class LoginCheckedRepositoryImpl implements LoginCheckedRepository {
 
 
         if (!passwordEncoder.matches(password,storedAuthor.getPassword())){
-            throw new CustomException(ErrorCode.Password, new String[]{"home/login", "잘못된 입력입니다"});
+            throw new CustomException(ErrorCode.INVALID_PASSWORD, new String[]{"home/login", "잘못된 입력입니다"});
         }else {
             Long storedAuthorId=storedAuthor.getId();
             LoginResponseDto loginResponseDto =new LoginResponseDto("로그인에 성공했습니다.",storedAuthorId,true);

@@ -1,14 +1,13 @@
 package com.example.schedule.service.schedule;
 
-import com.example.schedule.Dto.requestDto.common.ScheduleRequestDto;
-import com.example.schedule.Dto.responseDto.SchedulePageResponseDto;
-import com.example.schedule.Dto.responseDto.ScheduleResponseDto;
+import com.example.schedule.dto.requestDto.common.ScheduleRequestDto;
+import com.example.schedule.dto.responseDto.SchedulePageResponseDto;
+import com.example.schedule.dto.responseDto.ScheduleResponseDto;
 import com.example.schedule.entity.Author;
 import com.example.schedule.entity.Schedule;
 import com.example.schedule.exception.CustomException;
 import com.example.schedule.exception.ErrorCode;
 import com.example.schedule.repository.AuthorRepository;
-import com.example.schedule.repository.CommentRepository;
 import com.example.schedule.repository.ScheduleRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,35 +24,55 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     private final ScheduleRepository scheduleRepository;
     private final AuthorRepository authorRepository;
-    private final CommentRepository commentRepository;
+
     @Override
     public ScheduleResponseDto saveSchedule(ScheduleRequestDto scheduleRequestDto) {
 
         Schedule schedule=new Schedule(scheduleRequestDto);
 
         Author author=authorRepository.findById(scheduleRequestDto.getId()).orElseThrow(()->new RuntimeException("잘못된 아이디"));
+
         schedule.updateAuthor(author);
 
-        return new ScheduleResponseDto(scheduleRepository.save(schedule));
+        scheduleRepository.save(schedule);
+
+        return new ScheduleResponseDto(
+                schedule.getTask(),
+                schedule.getTitle(),
+                schedule.getCreatedAt(),
+                schedule.getUpdatedAt(),
+                schedule.getAuthor().getAuthorName(),
+                schedule.getAuthor().getEmail());
     }
 
     @Override
     public ScheduleResponseDto findScheduleById(long id) {
 
-        Schedule schedule=scheduleRepository.findById(id).orElseThrow(()->new CustomException(ErrorCode.Id, new String[]{"vc", " "}));
+        Schedule schedule=scheduleRepository.findById(id).orElseThrow(()->new CustomException(ErrorCode.INVALID_ID, new String[]{"잘못된 입력입니다."}));
 
-        return new ScheduleResponseDto(schedule);
+        return new ScheduleResponseDto(
+                schedule.getTask(),
+                schedule.getTitle(),
+                schedule.getCreatedAt(),
+                schedule.getUpdatedAt(),
+                schedule.getAuthor().getAuthorName(),
+                schedule.getAuthor().getEmail());
     }
 
     @Override
     public List<ScheduleResponseDto> findScheduleAll() {
-        List<ScheduleResponseDto> scheduleResponseDtoList=new ArrayList<>();
 
-        for (Schedule schedule:scheduleRepository.findAll()){
-            scheduleResponseDtoList.add(new ScheduleResponseDto(schedule));
-        }
+        return scheduleRepository.findAll()
+                .stream()
+                .map(schedule -> new ScheduleResponseDto(
+                        schedule.getTask(),
+                        schedule.getTitle(),
+                        schedule.getCreatedAt(),
+                        schedule.getUpdatedAt(),
+                        schedule.getAuthor().getAuthorName(),
+                        schedule.getAuthor().getEmail()))
+                .toList();
 
-        return scheduleResponseDtoList;
     }
 
     @Override
@@ -62,7 +80,7 @@ public class ScheduleServiceImpl implements ScheduleService{
     @Transactional
     public ScheduleResponseDto updateSchedule(long id,ScheduleRequestDto scheduleRequestDto) {
 
-        Schedule schedule=scheduleRepository.findById(id).orElseThrow((()->new RuntimeException("수고링")));
+        Schedule schedule=scheduleRepository.findById(id).orElseThrow(()->new CustomException(ErrorCode.INVALID_ID, new String[]{"잘못된 입력입니다."}));
 
         //단축 필요성
         if (scheduleRequestDto.getTask()!=null&& !scheduleRequestDto.getTask().isEmpty()){
@@ -73,19 +91,28 @@ public class ScheduleServiceImpl implements ScheduleService{
         }
         schedule.setUpdatedAt(LocalDateTime.now());
 
-        return new ScheduleResponseDto(schedule);
+        return new ScheduleResponseDto(
+                schedule.getTask(),
+                schedule.getTitle(),
+                schedule.getCreatedAt(),
+                schedule.getUpdatedAt(),
+                schedule.getAuthor().getAuthorName(),
+                schedule.getAuthor().getEmail());
     }
 
     @Override
     public List<ScheduleResponseDto> findScheduleByAuthorId(long AuthorId) {
-        List<ScheduleResponseDto> scheduleResponseDtoList=new ArrayList<>();
 
-        for (Schedule schedule:scheduleRepository.findByAuthor_Id(AuthorId)){
-            scheduleResponseDtoList.add(new ScheduleResponseDto(schedule));
-        }
+        return scheduleRepository.findByAuthor_Id(AuthorId).stream()
+                .map(schedule -> new ScheduleResponseDto(
+                        schedule.getTask(),
+                        schedule.getTitle(),
+                        schedule.getCreatedAt(),
+                        schedule.getUpdatedAt(),
+                        schedule.getAuthor().getAuthorName(),
+                        schedule.getAuthor().getEmail()))
+                .toList();
 
-        scheduleRepository.findByAuthor_Id(AuthorId);
-        return scheduleResponseDtoList;
     }
 
     @Override
@@ -101,8 +128,7 @@ public class ScheduleServiceImpl implements ScheduleService{
     }
     @Override
     public Page<SchedulePageResponseDto> getSchedules(Pageable pageable) {
-        Page<Schedule> schedules =scheduleRepository.findAllByOrderByUpdatedAtDesc(pageable);
 
-        return schedules.map(SchedulePageResponseDto::fromEntity);
+        return scheduleRepository.findSchedulePageWithCommentCount(pageable);
     }
 }

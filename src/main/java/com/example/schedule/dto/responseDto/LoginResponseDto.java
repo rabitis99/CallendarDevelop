@@ -1,4 +1,4 @@
-package com.example.schedule.Dto.responseDto;
+package com.example.schedule.dto.responseDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

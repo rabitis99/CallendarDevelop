@@ -1,4 +1,4 @@
-package com.example.schedule.Dto.requestDto.common;
+package com.example.schedule.dto.requestDto.common;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;

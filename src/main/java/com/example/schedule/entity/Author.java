@@ -1,8 +1,8 @@
 package com.example.schedule.entity;
 
-import com.example.schedule.Dto.requestDto.common.AuthorRequestDto;
+import com.example.schedule.exception.CustomException;
+import com.example.schedule.exception.ErrorCode;
 import jakarta.persistence.*;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,21 +22,22 @@ public class Author extends BaseEntity{
     private String email;
     private String password;
 
-    public Author(AuthorRequestDto authorRequestDto){
-        this.email=authorRequestDto.getEmail();
-        this.authorName=authorRequestDto.getAuthorName();
-        this.password=authorRequestDto.getPassword();
+    public Author(String authorName, String authorEmail, String authorPassword) {
+        this.email=authorEmail;
+        this.authorName=authorName;
+        this.password=authorPassword;
     }
+
     public void updateAuthorName(String authorName){
-        if (authorName==null){
-                throw new RuntimeException("엥?");
+        if (authorName==null|| authorName.isEmpty()){
+                throw new CustomException(ErrorCode.NOT_NULL_AND_NOT);
         }
         this.authorName=authorName;
     }
 
     public void setPassword(String password) {
-        if (password==null){
-            throw new RuntimeException("엥?");
+        if (authorName==null|| authorName.isEmpty()){
+            throw new CustomException(ErrorCode.NOT_NULL_AND_NOT);
         }
         this.password = password;
     }
